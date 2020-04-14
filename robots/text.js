@@ -1,11 +1,27 @@
 const algorithmia = require('algorithmia');
-const algorithmiaApiKey = require('../credentials/algorithmia').apiKey;
-const setenceBoundaryDetection = require('sbd');
+const algorithmiaApiKey = require('../credentials/algorithmia.json').apiKey;
+const sentenceBoundaryDetection = require('sbd');
+
+const watsonApiKey = require('../credentials/watson-nlu.json').apikey
+const watsonUrl = require('../credentials/watson-nlu.json').url
+
+const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const nlu = new NaturalLanguageUnderstandingV1({
+  version: '2018-04-05',
+  authenticator: new IamAuthenticator({
+    apikey: watsonApiKey,
+  }),
+  url: watsonUrl,
+});
 
 async function robot(content) {
   await fetchContentFromWikipedia(content);
   sanitizeContent(content);
   breakContentIntoSentences(content);
+  limitMaximumSentences(content);
+  await fetchKeywordsOfAllSentences(content);
 
  async function fetchContentFromWikipedia(content) {
     const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey);
@@ -44,12 +60,44 @@ async function robot(content) {
   function breakContentIntoSentences(content) {
     content.sentences = [];
 
-    const sentences = setenceBoundaryDetection.sentences(content.sourceContentSanitized);
+    const sentences = sentenceBoundaryDetection.sentences(content.sourceContentSanitized);
     sentences.forEach((sentence) => {
       content.sentences.push({
         text: sentence,
         keywords: [],
         images: []
+      });
+    });
+  }
+
+  function limitMaximumSentences(content) {
+    content.sentences = content.sentences.slice(0, content.maximumSentences);
+  }
+
+  async function fetchKeywordsOfAllSentences(content) {
+    for (const sentence of content.sentences) {
+      sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text);
+    } 
+  }
+
+  async function fetchWatsonAndReturnKeywords(sentence) {
+    return new Promise((resolve, reject) => {
+      nlu.analyze({
+        text: sentence,
+        features: {
+          keywords: {}
+        }
+      }, (error, response) => {
+        if (error) {
+          reject(error)
+          return
+        }
+
+        const keywords = response.result.keywords.map((keyword) => {
+          return keyword.text
+        });
+
+        resolve(keywords);
       })
     })
   }
