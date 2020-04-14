@@ -4,7 +4,7 @@
 
 File: `algorithmia.json`
 
-```
+```json
 {
   "apiKey": "simJ4Eko0SI4HOSLW6wCMPQWxRD1"
 }
@@ -14,7 +14,7 @@ File: `algorithmia.json`
 
 File: `watson-nlu.json` 
 
-```
+```json
 {
   "apikey": "-0Z322kG5lpvOMS2rZIZ7uA-MwG-vUjT0XnrxX3-0ZzF",
   "iam_apikey_description": "Auto-generated for key 91ae16f9-29ea-4acc-9dd0-69c91d80a045",
@@ -25,6 +25,3 @@ File: `watson-nlu.json`
 }
 ```
 
-or create a account in web site [Algorithmia](https://algorithmia.com) and get a key.
-
-PS: My Key is temporary. :blush:
