@@ -1,15 +1,1 @@
-# Crendentials format:
-
-## Algorithmia
-
-File: `algorithmia.json`
-
-```
-{
-  "apiKey": "simJ4Eko0SI4HOSLW6wCMPQWxRD1"
-}
-```
-
-or create a account in web site [Algorithmia](https://algorithmia.com) and get a key.
-
-PS: My Key is temporary. :blush:
+Projeto open source para fazer vídeos automatizados com a utilização da API de inteligência artificial Watson (IBM) e a API Machining Learn da Algorithmia.  Feito em Nodejs.
