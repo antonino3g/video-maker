@@ -18,6 +18,7 @@
   "homepage": "https://github.com/apfjunior/video-maker#readme",
   "dependencies": {
     "algorithmia": "^0.3.10",
+    "googleapis": "^48.0.0",
     "ibm-watson": "^5.4.0",
     "readline-sync": "^1.4.10",
     "sbd": "^1.0.17",
