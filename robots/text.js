@@ -37,7 +37,7 @@ async function robot() {
     const wikipediaContent = wikipediaResponse.get();
     
     content.sourceContentOriginal = wikipediaContent.content;
-  }
+  };
 
   function sanitizeContent(content) {
     const withoutBlankLinesAndMarkdown = removeBlankLineAndMarkdown(content.sourceContentOriginal);
@@ -51,18 +51,18 @@ async function robot() {
       const withoutBlankLinesAndMarkdown = allLines.filter((line) => {
         if (line.trim().length === 0 || line.trim().startsWith('=')) {
           return false;
-        }
+        };
 
         return true;
       });
 
       return withoutBlankLinesAndMarkdown.join('');
-    } 
-  }
+    };
+  };
 
   function removeDatesInParentheses(text) {
     return text.replace(/\((?:\([^()]*\)|[^()])*\)/gm, '').replace(/  /g,' ');
-  }
+  };
 
   function breakContentIntoSentences(content) {
     content.sentences = [];
@@ -75,17 +75,17 @@ async function robot() {
         images: []
       });
     });
-  }
+  };
 
   function limitMaximumSentences(content) {
     content.sentences = content.sentences.slice(0, content.maximumSentences);
-  }
+  };
 
   async function fetchKeywordsOfAllSentences(content) {
     for (const sentence of content.sentences) {
       sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text);
-    } 
-  }
+    };
+  };
 
   async function fetchWatsonAndReturnKeywords(sentence) {
     return new Promise((resolve, reject) => {
@@ -98,16 +98,16 @@ async function robot() {
         if (error) {
           reject(error)
           return
-        }
+        };
 
         const keywords = response.result.keywords.map((keyword) => {
           return keyword.text
         });
 
         resolve(keywords);
-      })
-    })
-  }
-}
+      });
+    });
+  };
+};
 
 module.exports = robot;
