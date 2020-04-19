@@ -109,6 +109,10 @@ credentials/*.json
 # Content.json
 content.json
 
-# Content.png and .jpg
+# Content files
 content/*.png
 content/*.jpg
+content/*.js
+
+# Videos by FFmpeg
+*.mp4
