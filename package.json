@@ -17,13 +17,18 @@
   },
   "homepage": "https://github.com/apfjunior/video-maker#readme",
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.20",
+    "@ffprobe-installer/ffprobe": "^1.0.12",
     "algorithmia": "^0.3.10",
+    "ffmpeg": "0.0.4",
+    "ffprobe": "^1.1.0",
     "gm": "^1.23.1",
     "googleapis": "^48.0.0",
     "ibm-watson": "^5.4.0",
     "image-downloader": "^3.5.0",
     "readline-sync": "^1.4.10",
     "sbd": "^1.0.17",
+    "videoshow": "^0.1.12",
     "watson-developer-cloud": "^4.0.1"
   }
 }
