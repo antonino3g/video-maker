@@ -1,5 +1,5 @@
 const imageDownloader = require('image-downloader');
-// const gm = require('gm').subClass({imageMagick: true});
+const gm = require('gm').subClass({imageMagick: true});
 const google = require('googleapis').google;
 const customSearch = google.customsearch('v1');
 const state = require('./state');
