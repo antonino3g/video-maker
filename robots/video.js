@@ -28,8 +28,8 @@ async function robot() {
     
     for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
       await convertImage(sentenceIndex);
-    }
-  }
+    };
+  };
 
   async function convertImage(sentenceIndex) {
     return new Promise((resolve, reject) => {
@@ -61,7 +61,7 @@ async function robot() {
         .write(outputFile, (error) => {
           if (error) {
             return reject(error);
-          } 
+          };
           
         console.log(`> Image converted: ${inputFile}`);
         resolve();
@@ -72,8 +72,8 @@ async function robot() {
  async function createAllSentenceImages(content) {
     for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
       await createSentenceImage(sentenceIndex, content.sentences[sentenceIndex].text);
-    }
-  }
+    };
+  };
 
   async function createSentenceImage(sentenceIndex, sentenceText) {
     return new Promise((resolve, reject) => {
@@ -120,7 +120,7 @@ async function robot() {
       .write(outputFile, (error) => {
         if (error) {
           return reject(error);
-        }
+        };
 
         console.log(`> Sentence created: ${outputFile}`);
         resolve();
@@ -147,7 +147,7 @@ async function robot() {
 
  async function createFFmpegScript(content) {
    await state.saveScript(content);
- }
+ };
  
   async function renderVideoWithFFmpegAndNode(content) {
     let images = [];
@@ -157,12 +157,12 @@ async function robot() {
         path: `./content/${sentenceIndex}-converted.png`,
         caption: content.sentences[sentenceIndex].text
       });
-    }
+    };
 
     var audioParams = {
       fade: true,
       delay: 1 // seconds
-    }
+    };
 
     const videoOptions = {
       fps: 26,
@@ -211,7 +211,7 @@ async function robot() {
         console.error('\n\nFinished processing. Video created ', output);
       })
       .on('progress', onProgress); // show progress 
-  }
+  };
 
   async function renderVideoFree(content) {
     renderVideoWithFFmpegAndNode(content);
@@ -222,8 +222,8 @@ async function robot() {
     if (progress.timemark != timemark) {
       timemark = progress.timemark;
       console.log('PROGRESS: ' + timemark + "...");
-    }
-  }
+    };
+  };
    
 };
 
