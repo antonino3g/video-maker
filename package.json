@@ -20,6 +20,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "@ffprobe-installer/ffprobe": "^1.0.12",
     "algorithmia": "^0.3.10",
+    "express": "^4.17.1",
     "ffmpeg": "0.0.4",
     "ffprobe": "^1.1.0",
     "gm": "^1.23.1",
