@@ -27,6 +27,7 @@
     "googleapis": "^48.0.0",
     "ibm-watson": "^5.4.0",
     "image-downloader": "^3.5.0",
+    "open": "^7.0.3",
     "readline-sync": "^1.4.10",
     "sbd": "^1.0.17",
     "videoshow": "^0.1.12",

@@ -6,6 +6,7 @@ const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffprobePath = require('@ffprobe-installer/ffprobe').path;
 
 const audio = path.join(__dirname, '../templates/1/newsroom.mp3');
+const video = path.join(__dirname, '../content/video-maker.mp4');
 
 let ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
@@ -20,8 +21,8 @@ async function robot() {
   await createAllSentenceImages(content);
   await createYouTubeThumbnail();
   await createFFmpegScript(content);   
-  await renderVideoFree(content); 
-
+  await renderVideoWithFFmpegAndNode(content);
+  
   state.save(content);
 
   async function convertAllImages(content) {
@@ -63,17 +64,17 @@ async function robot() {
             return reject(error);
           };
           
-        console.log(`> Image converted: ${inputFile}`);
-        resolve();
-       });
-   });
- };
-
- async function createAllSentenceImages(content) {
-    for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
-      await createSentenceImage(sentenceIndex, content.sentences[sentenceIndex].text);
-    };
+          console.log(`> [video-robot] Image converted: ${outputFile}`);
+          resolve();
+        });
+    });
   };
+
+  async function createAllSentenceImages(content) {
+      for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
+        await createSentenceImage(sentenceIndex, content.sentences[sentenceIndex].text);
+      };
+    };
 
   async function createSentenceImage(sentenceIndex, sentenceText) {
     return new Promise((resolve, reject) => {
@@ -122,7 +123,7 @@ async function robot() {
           return reject(error);
         };
 
-        console.log(`> Sentence created: ${outputFile}`);
+        console.log(`> [video-robot] Sentence created: ${outputFile}`);
         resolve();
       });
 
@@ -138,93 +139,83 @@ async function robot() {
             return reject(error);
           }
 
-          console.log('> Creating YouTube thumbnail');
+          console.log('> [video-robot] YouTube thumbnail created');
           resolve();
         });
       
     });
   };
 
- async function createFFmpegScript(content) {
-   await state.saveScript(content);
- };
+  async function createFFmpegScript(content) {
+    await state.saveScript(content);
+  };
  
   async function renderVideoWithFFmpegAndNode(content) {
-    let images = [];
+    console.log('> [video-robot] Rendering video with FFmpeg...');
 
-    for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
-      images.push({
-        path: `./content/${sentenceIndex}-converted.png`,
-        caption: content.sentences[sentenceIndex].text
-      });
-    };
+    return new Promise((resolve, reject) => {
+      let images = [];
 
-    var audioParams = {
-      fade: true,
-      delay: 1 // seconds
-    };
+      for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
+          images.push({
+          path: `./content/${sentenceIndex}-converted.png`,
+          caption: content.sentences[sentenceIndex].text
+        });
+      };
 
-    const videoOptions = {
-      fps: 26,
-      loop: 5, // seconds
-      transition: true,
-      transitionDuration: 1, // seconds
-      videoBitrate: 1024,
-      videoCodec: 'libx264',
-      size: '640x?',
-      audioBitrate: '128k',
-      audioChannels: 2,
-      format: 'mp4',
-      pixelFormat: 'yuv420p',
-      useSubRipSubtitles: false, // Use ASS/SSA subtitles instead
-      subtitleStyle: {
-        Fontname: 'Verdana',
-        Fontsize: '30',
-        PrimaryColour: '11861244',
-        SecondaryColour: '11861244',
-        TertiaryColour: '11861244',
-        BackColour: '-2147483640',
-        Bold: '2',
-        Italic: '0',
-        BorderStyle: '2',
-        Outline: '2',
-        Shadow: '3',
-        Alignment: '1', // left, middle, right
-        MarginL: '40',
-        MarginR: '60',
-        MarginV: '40'
-      }
-    };
+      const audioParams = {
+        fade: true,
+        delay: 1 // seconds
+      };
 
-    videoshow(images, videoOptions)
-      .audio(audio, audioParams) // adding audio
-      .save('video.mp4')
-      .on('start', function(command) {
-        console.log('\n\n [ FFmpeg still working in ]:\n\n', command, '\n\n[ Please wait... ]');
-      })
-      .on('error', function(err, stdout, stderr) {
-        console.error('Error:', err);
-        console.error('ffmpeg stderr: ', stderr);
-        console.error('ffmpeg stdout: ', stdout);
-      })
-      .on('end', function(output) {
-        console.error('\n\nFinished processing. Video created ', output);
-      })
-      .on('progress', onProgress); // show progress 
-  };
+      const videoOptions = {
+        fps: 30,
+        loop: 5, // seconds
+        transition: true,
+        transitionDuration: 1, // seconds
+        videoBitrate: 1024,
+        videoCodec: 'libx264',
+        size: '640x?',
+        audioBitrate: '128k',
+        audioChannels: 2,
+        format: 'mp4',
+        pixelFormat: 'yuv420p',
+        useSubRipSubtitles: false, // Use ASS/SSA subtitles instead
+        subtitleStyle: {
+          Fontname: 'Verdana',
+          Fontsize: '30',
+          PrimaryColour: '11861244',
+          SecondaryColour: '11861244',
+          TertiaryColour: '11861244',
+          BackColour: '-2147483640',
+          Bold: '2',
+          Italic: '0',
+          BorderStyle: '2',
+          Outline: '2',
+          Shadow: '3',
+          Alignment: '1', // left, middle, right
+          MarginL: '40',
+          MarginR: '60',
+          MarginV: '40'
+        }
+      };
 
-  async function renderVideoFree(content) {
-    renderVideoWithFFmpegAndNode(content);
-  };
-
-  async function onProgress(progress){
-    let timemark = null; 
-    if (progress.timemark != timemark) {
-      timemark = progress.timemark;
-      console.log('PROGRESS: ' + timemark + "...");
-    };
-  };
-   
+      videoshow(images, videoOptions)
+        .audio(audio, audioParams) // adding audio
+        .save(video)
+        .on('start', function(command) {
+          console.log('\n\n [ FFmpeg still working in ]:\n\n', command, '\n\n[ Please wait... ]');
+        })
+        .on('error', function(err, stdout, stderr) {
+          console.error('Error:', err);
+          console.error('ffmpeg stderr: ', stderr);
+        })
+        .on('end', function(output) {
+            resolve();
+            console.error('\n\n[video-robot] Finished processing. Video created:\n\n', output, '\n\n');
+        });
+    });
+  };  
 };
 
 module.exports = robot;  
