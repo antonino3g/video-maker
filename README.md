@@ -10,7 +10,7 @@ Com as imagens organizadas, será aplicado todo o template pré-fixado no vídeo
 
 Com o vídeo pronto, será utilizado o serviço do Google Cloud, aplicando-se a API do YouTube para Upload do vídeo automaticamente (já incluindo, nome do vídeo, descrição e Thumbnail).
 
-Todas essas etapas: / Recolher conceito / Download Imagens / Renderização Vídeo / Upload YouTube / poderão serem utilizadas separademente.
+Todas essas etapas: / Recolher conceito / Download Imagens / Renderização Vídeo / Upload YouTube / poderão ser utilizadas separademente.
 
 ## :information_source: How To Use
 
