@@ -74,4 +74,8 @@ $ npm i express
   <img alt="videoMaker" src="screenshots/09.png" width="90%">
 </p>
 
+<p>Check out Youtube: https://www.youtube.com/watch?v=_Ht4KIq9mko&feature=youtu.be</p>
+
+---
+:wave: [Entrar em contato no LinkedIn](https://www.linkedin.com/in/antoninopraxedes/)
 
