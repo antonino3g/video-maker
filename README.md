@@ -19,18 +19,59 @@ Por ser uma POC, necessitará das chaves das API's utilizadas no projeto. Clican
 Na minha adapação para ferramenta FREE, precisará das dependências:
 
 ```bash
-Videoshow
+# Videoshow
 $ npm i videoshow
 
-## Ffmpeg
+# FFmpeg
 $ npm install ffmpeg
 
-## @ffmpeg-installer/ffmpeg
+# @ffmpeg-installer/ffmpeg
 $ npm install --save @ffmpeg-installer/ffmpeg
 
-## @ffprobe-installer/ffprobe
+# @ffprobe-installer/ffprobe
 $ npm install --save @ffprobe-installer/ffprobe
 ```
+Demais dependências utilizadas:
 
+```bash
+# Readline
+$ npm install readline-sync
+
+## Algorithmia Market Place Machine Learning
+$ npm i algorithmia
+
+# Natural Language Understanding
+$ npm i watson-developer-cloud and 
+$ npm i ibm-watson
+
+# Google APIs
+$ npm i googleapis
+
+# Image Downloader
+$ npm i image-downloader
+
+# ImageMagick
+https://imagemagick.org/script/download.php
+
+# GM
+$ npm i gm
+
+# Express
+$ npm i express
+```
+
+## ScreenShots
+
+<p align="center">
+  <img alt="videoMaker" src="screenshots/01.png" width="90%">
+  <img alt="videoMaker" src="screenshots/02.png" width="90%">
+  <img alt="videoMaker" src="screenshots/03.png" width="90%">
+  <img alt="videoMaker" src="screenshots/04.png" width="90%">
+  <img alt="videoMaker" src="screenshots/05.png" width="90%">
+  <img alt="videoMaker" src="screenshots/06.png" width="90%">
+  <img alt="videoMaker" src="screenshots/07.png" width="90%">
+  <img alt="videoMaker" src="screenshots/08.png" width="90%">
+  <img alt="videoMaker" src="screenshots/09.png" width="90%">
+</p>
 
 
