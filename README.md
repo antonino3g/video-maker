@@ -1,14 +1,14 @@
 ## Sobre o projeto :bulb:
 
-Trata-se de uma POC (Prova de conceito) do projeto de código-aberto do [Filipe Deschamps](https://github.com/filipedeschamps/video-maker), onde basicamente o usuário entra com algum tema de pesquisa, depois escolhe o filtro de entrada: "Who is", "What is" e "The history of". Onde a API de busca no Wikipedia da [Algorithmia](https://algorithmia.com/), utilizará da Machine Learning para efetuar o resumo com base no filtro escolhido anteriormente pelo usuário. 
+Trata-se de uma POC (Prova de conceito) do projeto de código-aberto do [Filipe Deschamps](https://github.com/filipedeschamps/video-maker), onde basicamente o usuário informa algum tema de pesquisa para o vídeo, depois escolhe o filtro de entrada: "Who is", "What is" ou "The history of". Onde a API de busca no Wikipedia da [Algorithmia](https://algorithmia.com/), utilizará da Machine Learning para efetuar o resumo com base no filtro escolhido anteriormente pelo usuário. 
 
-Com o resumo do conceito salvo, a próxima etapa será extrair os metadados e as "keywords" com o uso da API de [Natural Language Understanding](https://www.ibm.com/br-pt/cloud/watson-natural-language-understanding) da Inteligência Artificial Watson da IBM. 
+Com o resumo salvo, a próxima etapa será extrair do conteúdo, os metadados e as "keywords" com o uso da API de [Natural Language Understanding](https://www.ibm.com/br-pt/cloud/watson-natural-language-understanding) da Inteligência Artificial Watson da IBM. 
 
-Após as "keywords" coletadas, serão utilizadas como base na busca das imagens, utilizando a API do Google Search/Image.
+Após as "keywords" coletadas, serão utilizadas como base na busca das imagens, utilizando a API do Google Search/Image. Pois a ideia é lançar a imagem referenciando a legenda sobre o tema durante o vídeo.
 
-Com as imagens organizadas, será aplicado todo o template pré-fixado no vídeo, convertendo as imagens extraídas, legendas com o texto/conceito recolhido na primeira fase em formato ".mp4". No projeto original, utilizou-se o After Effects. Contudo, por se tratar de uma ferramente paga, substitui por duas ferramentas open sources para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente.
+Com as imagens organizadas, será aplicado um template pré-fixado no vídeo, convertendo as imagens extraídas, o resumo recolhido na primeira fase, renderizando o vídeo ao formato ".mp4". No projeto original, utilizou-se o After Effects. Contudo, por se tratar de um <em>software proprietário</em>, fiz uma pequena modificação por dois softwares open sources para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente.
 
-Com o vídeo renderizado, aplicando-se a API do YouTube para Upload do vídeo automaticamente (já incluindo os campos obrigatórios do vídeo como título, descrição e Thumbnail).
+Com o vídeo renderizado, será aplicada a API do YouTube, possibilitando o login com as credenciais para Upload do vídeo automaticamente no canal do YouTube, já incluindo os campos obrigatórios do vídeo como título, descrição e Thumbnail. (Por default, fica como vídeo "não listado"). 
 
 Todas essas etapas: / Recolher conceito / Download Imagens / Renderização Vídeo / Upload YouTube / poderão ser utilizadas separademente.
 
