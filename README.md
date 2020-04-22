@@ -6,7 +6,7 @@ Com o resumo salvo, a próxima etapa será extrair do conteúdo, os metadados e 
 
 Após as "keywords" coletadas, serão utilizadas como base na busca das imagens, utilizando a API do Google Search/Image. Pois a ideia é lançar a imagem referenciando a legenda sobre o tema durante o vídeo.
 
-Com as imagens organizadas, será aplicado um template pré-fixado no vídeo, convertendo as imagens extraídas, o resumo recolhido na primeira fase, renderizando o vídeo ao formato ".mp4". No projeto original, utilizou-se o After Effects. Contudo, por se tratar de um <em>software proprietário</em>, fiz uma pequena modificação por dois softwares open sources para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente.
+Com as imagens organizadas, será aplicado um template prefixados no vídeo, convertendo as imagens extraídas, o resumo recolhido na primeira fase, renderizando o vídeo ao formato ".mp4". No projeto original, utilizou-se o After Effects. Contudo, por se tratar de um <em>software proprietário</em>, fiz uma pequena modificação por dois softwares open sources para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente.
 
 Com o vídeo renderizado, será aplicada a API do YouTube, possibilitando o login com as credenciais para Upload do vídeo automaticamente no canal do YouTube, já incluindo os campos obrigatórios do vídeo como título, descrição e Thumbnail. (Por default, fica como vídeo "não listado"). 
 
