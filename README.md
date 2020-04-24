@@ -30,6 +30,9 @@ $ npm install --save @ffmpeg-installer/ffmpeg
 
 # @ffprobe-installer/ffprobe
 $ npm install --save @ffprobe-installer/ffprobe
+
+# Open
+$ npm install open
 ```
 Demais dependências utilizadas:
 
