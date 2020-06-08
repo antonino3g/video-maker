@@ -6,9 +6,9 @@ Com o resumo salvo, a próxima etapa será extrair do conteúdo, os metadados e 
 
 Após as "keywords" coletadas, serão utilizadas como base na busca das imagens, utilizando a API do Google Search/Image. Pois a ideia é lançar a imagem referenciando a legenda sobre o tema durante o vídeo.
 
-Com as imagens organizadas, será aplicado um template prefixados no vídeo, convertendo as imagens extraídas, o resumo recolhido na primeira fase, renderizando o vídeo ao formato ".mp4". No projeto original, utilizou-se o After Effects. 
+Com as imagens organizadas, será aplicado um template prefixados no vídeo, convertendo as imagens extraídas, o resumo recolhido na primeira fase, renderizando o vídeo ao formato ".mp4".
 
-Contudo, por se tratar de um <em>software proprietário</em>, **fiz uma pequena modificação por dois softwares open sources** para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente.
+:film_projector: A minha versão do projeto, ao invés de usar o software proprietário da Adobe (After Effects) do projeto original, ajustei para uso de renderização e efeitos com 02 softwares livres para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente. Rodando em qualquer sistema operacional, inclusive no linux, onde o software da Adobe não é compatível oficialmente nessa plataforma.
 
 Com o vídeo renderizado, será aplicada a API do YouTube, possibilitando o login com as credenciais para Upload do vídeo automaticamente no canal do YouTube, já incluindo os campos obrigatórios do vídeo como título, descrição e Thumbnail. (Por default, fica como vídeo "não listado"). 
 
@@ -65,14 +65,6 @@ $ npm i gm
 $ npm i express
 ```
 
-### :recycle: Como contribuir
-
-- Fork esse repositório;
-- Crie uma branch com a sua feature: `git checkout -b my-feature`
-- Commit suas mudanças: `git commit -m 'feat: My new feature'`
-- Push a sua branch: `git push origin my-feature`
-
-
 ## ScreenShots
 
 <p align="center">
@@ -88,6 +80,18 @@ $ npm i express
 </p>
 
 <p>Check it out Youtube: https://www.youtube.com/watch?v=_Ht4KIq9mko&feature=youtu.be</p>
+
+### :recycle: Como contribuir
+
+- Fork esse repositório;
+- Crie uma branch com a sua feature: `git checkout -b my-feature`
+- Commit suas mudanças: `git commit -m 'feat: My new feature'`
+- Push a sua branch: `git push origin my-feature`
+
+
+## :memo:  License
+
+MIT License - Veja [LICENSE](https://opensource.org/licenses/MIT) para mais detalhes.
 
 ---
 **by Antonino Praxedes :wave: [Get in touch!](https://www.linkedin.com/in/antoninopraxedes/)**
