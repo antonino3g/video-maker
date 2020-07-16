@@ -1,12 +1,12 @@
 const express = require('express');
 const google = require('googleapis').google;
-const youtube = google.youtube({ version: 'v3'});
+const youtube = google.youtube({ version: 'v3' });
 const OAuth2 = google.auth.OAuth2;
 const state = require('./state.js');
 const fs = require('fs');
 const open = require('open');
 
-const path = require("path");
+const path = require('path');
 const video = path.join(__dirname, '../content/video-maker.mp4');
 
 async function robot() {
@@ -32,15 +32,17 @@ async function robot() {
         const app = express();
 
         const server = app.listen(port, () => {
-          console.log(`> [youtube-robot] Listening on http://localhost:${port}`);
+          console.log(
+            `> [youtube-robot] Listening on http://localhost:${port}`,
+          );
 
           resolve({
             app,
-            server
+            server,
           });
         });
       });
-    };
+    }
 
     async function createOAuthClient() {
       const credentials = require('../credentials/google-youtube.json');
@@ -48,7 +50,7 @@ async function robot() {
       const OAuthClient = new OAuth2(
         credentials.web.client_id,
         credentials.web.client_secret,
-        credentials.web.redirect_uris[0]
+        credentials.web.redirect_uris[0],
       );
 
       return OAuthClient;
@@ -57,7 +59,7 @@ async function robot() {
     function requestUserConsent(OAuthClient) {
       const consentUrl = OAuthClient.generateAuthUrl({
         access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/youtube']
+        scope: ['https://www.googleapis.com/auth/youtube'],
       });
 
       open(consentUrl); //open url browser
@@ -75,9 +77,12 @@ async function robot() {
           resolve(authCode);
         });
       });
-    };
+    }
 
-    async function requestGoogleForAccessTokens(OAuthClient, authorizationToken) {
+    async function requestGoogleForAccessTokens(
+      OAuthClient,
+      authorizationToken,
+    ) {
       return new Promise((resolve, reject) => {
         OAuthClient.getToken(authorizationToken, (error, tokens) => {
           if (error) {
@@ -90,13 +95,13 @@ async function robot() {
           resolve();
         });
       });
-    };
+    }
 
     function setGlobalGoogleAuthentication(OAuthClient) {
-        google.options({
-        auth: OAuthClient
+      google.options({
+        auth: OAuthClient,
       });
-    };
+    }
 
     async function stopWebServer(webServer) {
       return new Promise((resolve, reject) => {
@@ -104,17 +109,19 @@ async function robot() {
           resolve();
         });
       });
-    };
-  };
+    }
+  }
 
   async function uploadVideo(content) {
     const videoFilePath = video;
     const videoFileSize = fs.statSync(videoFilePath).size;
     const videoTitle = `${content.prefix} ${content.searchTerm}`;
     const videoTags = [content.searchTerm, ...content.sentences[0].keywords];
-    const videoDescription = content.sentences.map((sentence) => {
-      return sentence.text;
-    }).join('\n\n')
+    const videoDescription = content.sentences
+      .map(sentence => {
+        return sentence.text;
+      })
+      .join('\n\n');
 
     const requestParameters = {
       part: 'snippet, status',
@@ -122,30 +129,32 @@ async function robot() {
         snippet: {
           title: videoTitle,
           description: videoDescription,
-          tags: videoTags
+          tags: videoTags,
         },
         status: {
-          privacyStatus: 'unlisted'
-        }
+          privacyStatus: 'unlisted',
+        },
       },
       media: {
-        body: fs.createReadStream(videoFilePath)
-      }
+        body: fs.createReadStream(videoFilePath),
+      },
     };
 
     console.log('> [youtube-robot] Starting to upload the video to YouTube');
     const youtubeResponse = await youtube.videos.insert(requestParameters, {
-      onUploadProgress: onUploadProgress
+      onUploadProgress: onUploadProgress,
     });
 
-    console.log(`> [youtube-robot] Video available at: https://youtu.be/${youtubeResponse.data.id}`);
+    console.log(
+      `> [youtube-robot] Video available at: https://youtu.be/${youtubeResponse.data.id}`,
+    );
     return youtubeResponse.data;
 
     function onUploadProgress(event) {
-      const progress = Math.round( (event.bytesRead / videoFileSize) * 100 );
+      const progress = Math.round((event.bytesRead / videoFileSize) * 100);
       console.log(`> [youtube-robot] ${progress}% completed`);
-    };
-  };
+    }
+  }
 
   async function uploadThumbnail(videoInformation) {
     const videoId = videoInformation.id;
@@ -155,11 +164,11 @@ async function robot() {
       videoId: videoId,
       media: {
         mimeType: 'image/jpeg',
-        body: fs.createReadStream(videoThumbnailFilePath)
-      }
-    }
+        body: fs.createReadStream(videoThumbnailFilePath),
+      },
+    };
 
-    const youtubeResponse = await youtube.thumbnails.set(requestParameters)
+    const youtubeResponse = await youtube.thumbnails.set(requestParameters);
     console.log(`> [youtube-robot] Thumbnail uploaded!`);
   }
 }

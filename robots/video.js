@@ -1,7 +1,7 @@
-const gm = require('gm').subClass({imageMagick: true});
+const gm = require('gm').subClass({ imageMagick: true });
 const state = require('./state');
 const videoshow = require('videoshow');
-const path = require("path");
+const path = require('path');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffprobePath = require('@ffprobe-installer/ffprobe').path;
 
@@ -12,25 +12,27 @@ let ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
 
-
 async function robot() {
   console.log('> [video-robot] Starting...');
   const content = state.load();
-  
+
   await convertAllImages(content);
   await createAllSentenceImages(content);
   await createYouTubeThumbnail();
-  await createFFmpegScript(content);   
+  await createFFmpegScript(content);
   await renderVideoWithFFmpegAndNode(content);
-  
+
   state.save(content);
 
   async function convertAllImages(content) {
-    
-    for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
+    for (
+      let sentenceIndex = 0;
+      sentenceIndex < content.sentences.length;
+      sentenceIndex++
+    ) {
       await convertImage(sentenceIndex);
-    };
-  };
+    }
+  }
 
   async function convertImage(sentenceIndex) {
     return new Promise((resolve, reject) => {
@@ -42,39 +44,46 @@ async function robot() {
       gm()
         .in(inputFile)
         .out('(')
-          .out('-clone')
-          .out('0')
-          .out('-background', 'white')
-          .out('-blur', '0x9')
-          .out('-resize', `${width}x${height}^`)
+        .out('-clone')
+        .out('0')
+        .out('-background', 'white')
+        .out('-blur', '0x9')
+        .out('-resize', `${width}x${height}^`)
         .out(')')
         .out('(')
-          .out('-clone')
-          .out('0')
-          .out('-background', 'white')
-          .out('-resize', `${width}x${height}`)
+        .out('-clone')
+        .out('0')
+        .out('-background', 'white')
+        .out('-resize', `${width}x${height}`)
         .out(')')
         .out('-delete', '0')
         .out('-gravity', 'center')
         .out('-compose', 'over')
         .out('-composite')
         .out('-extent', `${width}x${height}`)
-        .write(outputFile, (error) => {
+        .write(outputFile, error => {
           if (error) {
             return reject(error);
-          };
-          
+          }
+
           console.log(`> [video-robot] Image converted: ${outputFile}`);
           resolve();
         });
     });
-  };
+  }
 
   async function createAllSentenceImages(content) {
-      for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
-        await createSentenceImage(sentenceIndex, content.sentences[sentenceIndex].text);
-      };
-    };
+    for (
+      let sentenceIndex = 0;
+      sentenceIndex < content.sentences.length;
+      sentenceIndex++
+    ) {
+      await createSentenceImage(
+        sentenceIndex,
+        content.sentences[sentenceIndex].text,
+      );
+    }
+  }
 
   async function createSentenceImage(sentenceIndex, sentenceText) {
     return new Promise((resolve, reject) => {
@@ -83,58 +92,57 @@ async function robot() {
       const templateSettings = {
         0: {
           size: '1920x400',
-          gravity: 'center'
+          gravity: 'center',
         },
         1: {
           size: '1920x1080',
-          gravity: 'center'
+          gravity: 'center',
         },
         2: {
           size: '800x1080',
-          gravity: 'west'
-      },
+          gravity: 'west',
+        },
         3: {
           size: '1920x400',
-          gravity: 'center'
+          gravity: 'center',
         },
         4: {
           size: '1920x1080',
-          gravity: 'center'
+          gravity: 'center',
         },
         5: {
           size: '800x1080',
-          gravity: 'west'
+          gravity: 'west',
         },
         6: {
           size: '1920x400',
-          gravity: 'center'
-        }
+          gravity: 'center',
+        },
       };
 
       gm()
-      .out('-size', templateSettings[sentenceIndex].size)
-      .out('-gravity', templateSettings[sentenceIndex].gravity)
-      .out('-background', 'transparent')
-      .out('-fill', 'white')
-      .out('-kerning', '-1')
-      .out(`caption:${sentenceText}`)
-      .write(outputFile, (error) => {
-        if (error) {
-          return reject(error);
-        };
+        .out('-size', templateSettings[sentenceIndex].size)
+        .out('-gravity', templateSettings[sentenceIndex].gravity)
+        .out('-background', 'transparent')
+        .out('-fill', 'white')
+        .out('-kerning', '-1')
+        .out(`caption:${sentenceText}`)
+        .write(outputFile, error => {
+          if (error) {
+            return reject(error);
+          }
 
-        console.log(`> [video-robot] Sentence created: ${outputFile}`);
-        resolve();
-      });
-
+          console.log(`> [video-robot] Sentence created: ${outputFile}`);
+          resolve();
+        });
     });
-  };
+  }
 
   async function createYouTubeThumbnail() {
     return new Promise((resolve, reject) => {
       gm()
         .in('./content/0-converted.png')
-        .write('./content/youtube-thumbnail.jpg', (error) => {
+        .write('./content/youtube-thumbnail.jpg', error => {
           if (error) {
             return reject(error);
           }
@@ -142,30 +150,33 @@ async function robot() {
           console.log('> [video-robot] YouTube thumbnail created');
           resolve();
         });
-      
     });
-  };
+  }
 
   async function createFFmpegScript(content) {
     await state.saveScript(content);
-  };
- 
+  }
+
   async function renderVideoWithFFmpegAndNode(content) {
     console.log('> [video-robot] Rendering video with FFmpeg...');
 
     return new Promise((resolve, reject) => {
       let images = [];
 
-      for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
-          images.push({
+      for (
+        let sentenceIndex = 0;
+        sentenceIndex < content.sentences.length;
+        sentenceIndex++
+      ) {
+        images.push({
           path: `./content/${sentenceIndex}-converted.png`,
-          caption: content.sentences[sentenceIndex].text
+          caption: content.sentences[sentenceIndex].text,
         });
-      };
+      }
 
       const audioParams = {
         fade: true,
-        delay: 1 // seconds
+        delay: 1, // seconds
       };
 
       const videoOptions = {
@@ -196,26 +207,34 @@ async function robot() {
           Alignment: '1', // left, middle, right
           MarginL: '40',
           MarginR: '60',
-          MarginV: '40'
-        }
+          MarginV: '40',
+        },
       };
 
       videoshow(images, videoOptions)
         .audio(audio, audioParams) // adding audio
         .save(video)
-        .on('start', function(command) {
-          console.log('\n\n [ FFmpeg still working in ]:\n\n', command, '\n\n[ Please wait... ]');
+        .on('start', function (command) {
+          console.log(
+            '\n\n [ FFmpeg still working in ]:\n\n',
+            command,
+            '\n\n[ Please wait... ]',
+          );
         })
-        .on('error', function(err, stdout, stderr) {
+        .on('error', function (err, stdout, stderr) {
           console.error('Error:', err);
           console.error('ffmpeg stderr: ', stderr);
         })
-        .on('end', function(output) {
-            resolve();
-            console.error('\n\n[video-robot] Finished processing. Video created:\n\n', output, '\n\n');
+        .on('end', function (output) {
+          resolve();
+          console.error(
+            '\n\n[video-robot] Finished processing. Video created:\n\n',
+            output,
+            '\n\n',
+          );
         });
     });
-  };  
-};
+  }
+}
 
-module.exports = robot;  
+module.exports = robot;
