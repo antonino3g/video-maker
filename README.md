@@ -1,3 +1,9 @@
+<p align="center">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/apfjunior/video-maker">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/apfjunior/video-maker">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/apfjunior/video-maker">
+</p>
+
 ## Sobre o projeto :bulb:
 
 Trata-se de uma POC (Prova de conceito) do projeto de código-aberto do [Filipe Deschamps](https://github.com/filipedeschamps/video-maker), onde basicamente o usuário informa algum tema de pesquisa para o vídeo, depois escolhe o filtro de entrada: "Who is", "What is" ou "The history of". Onde a API de busca no Wikipedia da [Algorithmia](https://algorithmia.com/), utilizará da Machine Learning para efetuar o resumo com base no filtro escolhido anteriormente pelo usuário. 
