@@ -5,6 +5,7 @@
   <a href="https://github.com/apfjunior">
     <img alt="Made by Antonino Praxedes" src="https://img.shields.io/badge/made%20by-Antonino%20Praxedes-blue">
   </a>
+</p>
 
 ## Sobre o projeto :bulb:
 
