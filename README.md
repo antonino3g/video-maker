@@ -103,5 +103,5 @@ $ npm i express
 MIT License - Veja [LICENSE](https://opensource.org/licenses/MIT) para mais detalhes.
 
 ---
-**Created by Antonino Praxedes created: [Get in touch!](https://www.linkedin.com/in/antoninopraxedes/)**
+**Created by Antonino Praxedes!  👋🏻 [Get in touch!](https://www.linkedin.com/in/antoninopraxedes/)**
 
