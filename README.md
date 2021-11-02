@@ -7,7 +7,7 @@
   </a>
 </p>
 
-:film_projector: A minha versão do projeto, ao invés de usar o software proprietário da Adobe (After Effects) do projeto original, ajustei para uso de renderização e efeitos com 02 softwares livres para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente. Rodando em qualquer sistema operacional, inclusive no linux, onde o software da Adobe não é compatível oficialmente nessa plataforma.
+> :film_projector: A minha versão do projeto, ao invés de usar o software proprietário da Adobe (After Effects) do projeto original, ajustei para uso de renderização e efeitos com 02 softwares livres para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente. Rodando em qualquer sistema operacional, inclusive no linux, onde o software da Adobe não é compatível oficialmente nessa plataforma.
 
 ## Sobre o projeto :bulb:
 
