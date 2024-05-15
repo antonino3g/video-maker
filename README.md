@@ -9,7 +9,7 @@
 
 > :film_projector: A minha versão do projeto, ao invés de usar o software proprietário da Adobe (After Effects) do projeto original, ajustei para uso de renderização e efeitos com 02 softwares livres para aplicação de efeitos e conversão do vídeo: [Videoshow](https://www.npmjs.com/package/videoshow) e [FFmpeg](https://www.ffmpeg.org/) respectivamente. Rodando em qualquer sistema operacional, inclusive no linux, onde o software da Adobe não é compatível oficialmente nessa plataforma.
 
-## Sobre o projeto :bulb:
+## Sobre o projeto :bulb: #
 
 Trata-se de uma POC (Prova de conceito) do projeto de código-aberto do [Filipe Deschamps](https://www.youtube.com/watch?v=kjhu1LEmRpY), onde basicamente o usuário informa algum tema de pesquisa para o vídeo, depois escolhe o filtro de entrada: "Who is", "What is" ou "The history of". Onde a API de busca no Wikipedia da [Algorithmia](https://algorithmia.com/), utilizará da Machine Learning para efetuar o resumo com base no filtro escolhido anteriormente pelo usuário. 
 
